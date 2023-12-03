@@ -10,34 +10,20 @@
 <body>
   <div class="container">
     <%- include('partials/header.ejs') %>
-
     <div class="container">
-      <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
-      
-        <div class="feature col">
-          <div class="feature-icon bg-gradient">
-            <img class="d-block mx-auto mb-4" src="https://upload.wikimedia.org/wikipedia/commons/8/8e/Catcher-in-the-rye-red-cover.jpg" alt="" width="172" height="257">
-          </div>
-          <h2>Book Title</h2>
-          <p>Book description.</p>
-          <a href="#" class="icon-link">
-            Detail
+      <h1 class="mt-5">Books by <%= authorName%></h1>
+      <div class="list-group">
+        <% {booksData.map((book) => { %>
+          <a href="/books/detail/<%= book.id %>" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/VisualEditor_-_Icon_-_Open-book-2.svg/1024px-VisualEditor_-_Icon_-_Open-book-2.svg.png" alt="twbs" width="32" height="32" class="rounded-circle flex-shrink-0">
+            <div class="d-flex gap-2 w-100 justify-content-between">
+              <div>
+                <h6 class="mb-0"><%= book.title %></h6>
+              </div>
+            </div>
           </a>
-        </div>
-
-        <div class="feature col">
-          <div class="feature-icon bg-gradient">
-            <img class="d-block mx-auto mb-4" src="https://upload.wikimedia.org/wikipedia/commons/8/8e/Catcher-in-the-rye-red-cover.jpg" alt="" width="172" height="257">
-          </div>
-          <h2>Book Title</h2>
-          <p>Book description.</p>
-          <a href="#" class="icon-link">
-            Detail
-          </a>
-        </div>
-
-
-  </div>
+        <% })} %>
+      </div>
   </div>
 </div>
 

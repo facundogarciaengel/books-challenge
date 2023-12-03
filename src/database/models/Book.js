@@ -16,7 +16,10 @@ module.exports = (sequelize, dataTypes) => {
     },
     description: {
       type: dataTypes.STRING
-    }
+    }, 
+    release_date: {
+      type: dataTypes.DATE
+    },
   };
   let config = {
     tableName: 'books',

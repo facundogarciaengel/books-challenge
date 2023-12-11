@@ -31,7 +31,11 @@
                 <div class="col-md-9 pe-5">
   
                   <input type="email" name="email" class="form-control form-control-lg" placeholder="example@gmail.com" />
-  
+                  <% if (locals.errors && errors.email) { %>
+                    <div class="text-danger">
+                      <%= errors.email.msg %>
+                    </div>
+                  <% } %>
                 </div>
               </div>
   
@@ -47,6 +51,16 @@
   
                   <input type="password" name="password" class="form-control form-control-lg" >
   
+                </div>
+              </div>
+
+              <hr class="mx-n3">
+
+              <div class="col-md-6 my-2">
+                <div class="form-group form-check">
+                  <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input" name="remember_user">Recordar mi usuario
+                  </label>
                 </div>
               </div>
   

@@ -4,8 +4,7 @@ const session = require('express-session');
 const cookies = require('cookie-parser');
 
 const app = express();
-
-// const userLoggedMiddleware = require('./middlewares/userLoggedMiddleware')
+ const userLoggedMiddleware = require('./middlewares/userLoggedMiddleware')
 
 app.use(session({
   secret: 'secreto',
@@ -15,7 +14,7 @@ app.use(session({
 
 app.use(cookies());
 
-// app.use(userLoggedMiddleware);
+ app.use(userLoggedMiddleware);
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());

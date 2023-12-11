@@ -5,6 +5,7 @@ const { validationResult } = require('express-validator');
 
 const mainController = {
   home: (req, res) => {
+    console.log(req.cookies.userEmail)
     db.Book.findAll({
       include: [{ association: 'authors' }]
     })
@@ -69,6 +70,7 @@ console.log(booksData)
   },
 
   register: (req, res) => {
+   
    return res.render('register');
   },
 
@@ -95,38 +97,72 @@ console.log(booksData)
 
   login: (req, res) => {
     // Implement login process
+  
     return res.render('login');
   },
 
   processLogin: async (req, res) => {
-    // Implement login process
-    let userToLogin = await db.User.findOne({where : {Email: req.body.email}}) //busco el usuario en la base de datos por email 
-    if(userToLogin){ //si existe el usuario
-      let passwordOk = bcryptjs.compareSync(req.body.password, userToLogin.Pass) //comparo la contraseña ingresada con la de la base de datos
-      if(passwordOk){ //si la contrase;a es correcta
-        delete userToLogin.Pass //borro la contrase;a del objeto
-        req.session.userLogged = userToLogin //guardo el usuario en la session
-        console.log(req.session.userLogged)
-        if(req.body.remember_user){ //si el usuario tildo el checkbox
-       res.cookie('userEmail' , req.body.email, {maxAge: (1000* 60) * 20 }) //guardo la cookie con el email por 20 minutos 
-    }
-    res.redirect('/') //redirijo a la home
+    // Implemetar el proceso de inicio de sesión
+  
+    // Buscar el usuario en la base de datos por correo electrónico
+    let userToLogin = await db.User.findOne({
+      where: {
+        Email: req.body.email
+      }
+    });
+    // Imprimir en la consola el usuario encontrado (o null si no se encuentra)
+    console.log('loginprocss usertoLogin', userToLogin);
+  
+    // Verificar si el usuario existe
+    if (userToLogin) {
+      // Comparar la contraseña ingresada con la almacenada en la base de datos
+      let passwordOk = bcryptjs.compareSync(req.body.password, userToLogin.Pass);
+  
+      // Si la contraseña es correcta
+      if (passwordOk) {
+        // Eliminar la contraseña del objeto antes de almacenar en la sesión
+        delete userToLogin.Pass;
+  
+        // Guardar el usuario en la sesión
+        req.session.userLogged = userToLogin;
+        console.log(req.session.userLogged);
+  
+        // Si el usuario marcó la casilla "remember_user"
+        if (req.body.remember_user) {
+          // Guardar la cookie con el correo electrónico por 20 minutos
+          res.cookie('userEmail', req.body.email, { maxAge: (1000 * 60) * 2 });
+        }
+  
+        // Redirigir al usuario a la página de inicio
+        return res.redirect('/');
       } else {
-        res.render('login', {errors: {
-          email: {
-            msg: 'Las credenciales son invalidas'
+        // Si la contraseña es incorrecta, renderizar la página de inicio de sesión con un mensaje de error
+        return res.render('login', {
+          errors: {
+            email: {
+              msg: 'Las credenciales son inválidas'
+            }
           }
-        }})
+        });
       }
     }
-
+  
+    // Si el usuario no existe, renderizar la página de inicio de sesión con un mensaje de error
+    return res.render('login', {
+      errors: {
+        email: {
+          msg: 'No se encuentra este correo electrónico en nuestra base de datos'
+        }
+      }
+    });
   },
-
+  
   logout: (req, res) => {
     // Implement logout process
     res.clearCookie('userEmail') //borro la cookie
     req.session.destroy() //destruyo la session
-    res.redirect('/');
+    console.log('logout')
+   return res.redirect('/');
   },
 
   edit: (req, res) => {

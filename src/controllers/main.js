@@ -20,6 +20,8 @@ const mainController = {
     let book = await db.Book.findByPk(req.params.id, {
       include: [{ association: 'authors' }]
     });
+    let user = req.session.userLogged
+    console.log('user en bookDetail', user)
     let dataBook = book.dataValues
     let dataAuthor = book.dataValues.authors[0].dataValues
     res.render('bookDetail', {dataBook, dataAuthor});

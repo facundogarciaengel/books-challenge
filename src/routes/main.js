@@ -12,7 +12,7 @@ router.post('/books/search', mainController.bookSearchResult);
 router.get('/authors', mainController.authors);
 router.get('/authors/:id/books', mainController.authorBooks);
 router.get('/users/register' ,guest ,mainController.register);
-router.post('/users/register',validations,mainController.processRegister);
+router.post('/users/register',validations ,mainController.processRegister);
 router.get('/users/login',guest ,mainController.login);
  router.post('/users/login', mainController.processLogin);
 router.get('/users/logout', mainController.logout);

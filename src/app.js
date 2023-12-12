@@ -2,6 +2,7 @@ const express = require('express');
 const mainRouter = require('./routes/main');
 const session = require('express-session');
 const cookies = require('cookie-parser');
+const methodOverride = require('method-override');
 
 const app = express();
  const userLoggedMiddleware = require('./middlewares/userLoggedMiddleware')
@@ -18,7 +19,7 @@ app.use(cookies());
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-
+app.use(methodOverride('_method'));
 app.set('view engine', 'ejs');
 app.set('views', 'src/views');
 

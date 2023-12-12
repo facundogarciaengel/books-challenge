@@ -167,14 +167,27 @@ console.log(booksData)
    return res.redirect('/');
   },
 
-  edit: (req, res) => {
+  edit: async(req, res) => {
     // Implement edit book
-    res.render('editBook', {id: req.params.id})
+    console.log('edit') 
+    let book = await db.Book.findByPk(req.params.id, {
+      include: [{ association: 'authors' }]
+    });
+    let dataBook = book.dataValues
+    let dataAuthor = book.dataValues.authors[0].dataValues
+    res.render('editBook', {dataBook, dataAuthor, id: req.params.id});
   },
 
-  processEdit: (req, res) => {
+  processEdit: async(req, res) => {
     // Implement edit book
-    res.render('home');
+    let book = await db.Book.findByPk(req.params.id);
+   await book.update({
+      title: req.body.title,
+      description: req.body.description,
+      cover: req.body.cover,
+    })
+  console.log('bookEditado', book)
+    return res.redirect('/');
   }
 };
 

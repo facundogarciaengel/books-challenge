@@ -22,7 +22,15 @@
           <% if(locals.userLogged && locals.userLogged.categoryId == '1') {%>
           <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
             <a href="/books/edit/<%= dataBook.id %>" class="btn btn-primary btn-lg px-4 gap-3">Edit</a>
-          <button type="button" class="btn btn-outline-secondary btn-lg px-4">Delete</button>
+            <% if(!locals.userLogged.deleted) {%>
+            <form action="/books/delete/<%= dataBook.id %>?_method=delete" method="post">
+          <button type="submit" class="btn btn-outline-secondary btn-lg px-4">Delete</button>
+          </form>
+          <% }else{ %>
+            <form action="/books/restore/<%= dataBook.id %>?_method=put" method="post">
+          <button type="submit" class="btn btn-outline-secondary btn-lg px-4">Restore</button>
+          </form>
+          <% } %>
           </div>
           <% } %>  
         </div>

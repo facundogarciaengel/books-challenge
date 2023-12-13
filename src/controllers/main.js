@@ -10,7 +10,9 @@ const mainController = {
       include: [{ association: 'authors' }]
     })
       .then((books) => {
-        res.render('home', { books });
+        console.log('books en home', books)
+        let booksFiltered = books.filter(book => book.deleted == 0)
+        res.render('home', { books: booksFiltered });
       })
       .catch((error) => console.log(error));
   },
@@ -44,10 +46,25 @@ const mainController = {
     res.render('search', { books });
   },
 
-  deleteBook: (req, res) => {
+  deleteBook: async (req, res) => {
     // Implement delete book
-    res.render('home');
+    let book = await db.Book.findByPk(req.params.id);
+    await book.update({
+        deleted: 1
+      })
+    console.log('bookEliminado', book)
+    return res.redirect('/');
   },
+
+  restoreBook: async(req, res) => {
+    // Implement restore book
+    let book = await db.Book.findByPk(req.params.id);
+    await book.update({
+        deleted: 0
+      })
+    console.log('bookRestaurado', book)
+    return res.redirect('/');
+  }, 
 
   authors: (req, res) => {
     db.Author.findAll()

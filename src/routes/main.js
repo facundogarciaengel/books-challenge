@@ -16,7 +16,8 @@ router.post('/users/register',validations ,mainController.processRegister);
 router.get('/users/login',guest ,mainController.login);
  router.post('/users/login', mainController.processLogin);
 router.get('/users/logout', mainController.logout);
-router.delete('/books/:id', mainController.deleteBook);
+router.delete('/books/delete/:id', mainController.deleteBook);
+router.put('/books/restore/:id', mainController.restoreBook);
 router.get('/books/edit/:id', mainController.edit);
 router.put('/books/edit/:id', mainController.processEdit);
 

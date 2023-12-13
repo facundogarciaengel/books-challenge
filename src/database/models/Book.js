@@ -20,6 +20,10 @@ module.exports = (sequelize, dataTypes) => {
     release_date: {
       type: dataTypes.DATE
     },
+    deleted : {
+      type: dataTypes.INTEGER,
+      defaultValue: 0
+    }
   };
   let config = {
     tableName: 'books',

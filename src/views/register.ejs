@@ -21,7 +21,7 @@
   
           <form action="/users/register" method="POST" class="card" style="border-radius: 15px;">
             <div class="card-body">
-  
+  <div id="errorMsg" class="text-danger"></div>
               <div class="row align-items-center pt-4 pb-3">
                 <div class="col-md-3 ps-5">
   
@@ -30,12 +30,13 @@
                 </div>
                 <div class="col-md-9 pe-5">
   
-                  <input type="text" name="name" class="form-control form-control-lg <%= locals.errors && errors.name ? 'is-invalid' : null %>" 
+                  <input type="text" id='name' name="name" class="form-control form-control-lg <%= locals.errors && errors.name ? 'is-invalid' : null %>" 
                   value="<%= locals.oldData ? oldData.name : null %>"/>
                   <% if (locals.errors && errors.name) { %>
-                    <div class="text-danger">
+                    <div id="" class="text-danger">
                       <%= errors.name.msg %> 
-                    </div>
+                      </div>
+                    
                   <% } %>
                 </div>
               </div>
@@ -123,7 +124,7 @@
               </div>
   
               <hr class="mx-n3">
-  
+            
               <div class="px-5 py-4">
                 <button type="submit" class="btn btn-primary btn-lg">Register</button>
               </div>
@@ -137,5 +138,7 @@
   </section>
 </div>
 <%- include('partials/footer.ejs') %>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/js/registerValidation.js"></script>
 </body>
 </html>
